@@ -20,3 +20,6 @@
 2026-04-05 17:28:09,686 - INFO - Recall Score : 0.91655
 2026-04-05 17:28:09,686 - INFO - F1 Score : 0.9156103493286444
 2026-04-05 17:28:09,686 - INFO - Model Evaluation Done..
+2026-04-05 23:22:07,522 - INFO - Loading processed data for training...
+2026-04-05 23:22:08,689 - INFO - Training RandomForest model with n_estimators: 100
+2026-04-05 23:22:20,275 - INFO - Model Training Complete. Accuracy: 0.99995

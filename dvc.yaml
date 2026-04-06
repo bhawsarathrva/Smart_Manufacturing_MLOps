@@ -1,0 +1,20 @@
+stages:
+  data_processing:
+    cmd: python -m src.data_processing
+    deps:
+      - src/data_processing.py
+      - DATA/data.csv
+      - src/logger.py
+      - src/custom_exception.py
+    outs:
+      - artifacts/processed
+  
+  model_training:
+    cmd: python -m src.model_training
+    deps:
+      - src/model_training.py
+      - artifacts/processed
+      - src/logger.py
+      - src/custom_exception.py
+    outs:
+      - artifacts/models
