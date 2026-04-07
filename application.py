@@ -44,5 +44,19 @@ def index():
 
     return render_template("index.html" , prediction=prediction , features = FEATURES)
 
+@app.route("/predict", methods=["POST"])
+def predict_api():
+    try:
+        data = request.get_json()
+        input_data = [float(data.get(feature, 0)) for feature in FEATURES]
+        input_array = np.array(input_data).reshape(1, -1)
+        scaled_array = scaler.transform(input_array)
+        pred = model.predict(scaled_array)[0]
+        prediction = LABELS.get(pred, "Unknown")
+        return {"prediction": prediction, "status": "success"}
+    except Exception as e:
+        return {"error": str(e), "status": "error"}, 400
+
+
 if __name__=="__main__":
     app.run(debug=True , host="0.0.0.0" , port=5000)

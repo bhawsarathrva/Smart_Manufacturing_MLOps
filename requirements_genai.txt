@@ -1,0 +1,16 @@
+# Production-Grade GenAI & Azure ML Stack
+azure-ai-ml                     # Azure ML SDK v2
+azure-identity
+azure-iot-hub
+azure-cosmos
+langchain                      # LLM Orchestration
+langchain-azure-openai         # GenAI Reasoning
+ultralytics                    # Real-time base detection
+transformers                   # SLM (Phi-3/Qwen) handling
+peft                           # LoRA/QLoRA for fine-tuning
+bitsandbytes                   # 4-bit quant
+accelerate                     # multi-gpu training
+pydantic                       # Structured event validation
+opencv-python
+imutils
+python-dotenv

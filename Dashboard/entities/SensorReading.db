@@ -1,0 +1,51 @@
+{
+  "name": "SensorReading",
+  "type": "object",
+  "properties": {
+    "machine_id": {
+      "type": "string",
+      "description": "Reference to Machine entity ID"
+    },
+    "sensor_type": {
+      "type": "string",
+      "enum": [
+        "temperature",
+        "vibration",
+        "pressure",
+        "humidity",
+        "power",
+        "speed",
+        "torque",
+        "flow_rate"
+      ],
+      "description": "Type of sensor"
+    },
+    "value": {
+      "type": "number",
+      "description": "Sensor reading value"
+    },
+    "unit": {
+      "type": "string",
+      "description": "Unit of measurement"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Reading timestamp"
+    },
+    "is_anomaly": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this reading is anomalous"
+    },
+    "anomaly_score": {
+      "type": "number",
+      "description": "Anomaly confidence score (0-1)"
+    }
+  },
+  "required": [
+    "machine_id",
+    "sensor_type",
+    "value"
+  ]
+}

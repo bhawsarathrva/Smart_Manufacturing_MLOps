@@ -1,0 +1,67 @@
+{
+  "name": "ProductionBatch",
+  "type": "object",
+  "properties": {
+    "batch_number": {
+      "type": "string",
+      "description": "Unique batch identifier"
+    },
+    "product_name": {
+      "type": "string",
+      "description": "Product being manufactured"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "scheduled",
+        "in_progress",
+        "completed",
+        "paused",
+        "rejected"
+      ],
+      "default": "scheduled",
+      "description": "Batch production status"
+    },
+    "target_quantity": {
+      "type": "number",
+      "description": "Target units to produce"
+    },
+    "produced_quantity": {
+      "type": "number",
+      "description": "Units produced so far"
+    },
+    "defect_count": {
+      "type": "number",
+      "description": "Number of defective units"
+    },
+    "yield_rate": {
+      "type": "number",
+      "description": "Yield rate percentage"
+    },
+    "start_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Batch start time"
+    },
+    "end_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Batch end time"
+    },
+    "machine_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Machines used for this batch"
+    },
+    "quality_score": {
+      "type": "number",
+      "description": "Overall quality score (0-100)"
+    }
+  },
+  "required": [
+    "batch_number",
+    "product_name"
+  ]
+}

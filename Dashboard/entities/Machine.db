@@ -1,0 +1,86 @@
+{
+  "name": "Machine",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Machine name/identifier"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "cnc",
+        "robot_arm",
+        "conveyor",
+        "press",
+        "welder",
+        "inspection",
+        "packaging",
+        "assembly"
+      ],
+      "description": "Machine type"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "running",
+        "idle",
+        "maintenance",
+        "error",
+        "offline"
+      ],
+      "default": "idle",
+      "description": "Current operational status"
+    },
+    "location": {
+      "type": "string",
+      "description": "Factory floor location (e.g. Line A, Zone 2)"
+    },
+    "oee_score": {
+      "type": "number",
+      "description": "Overall Equipment Effectiveness score (0-100)"
+    },
+    "temperature": {
+      "type": "number",
+      "description": "Current temperature in Celsius"
+    },
+    "vibration": {
+      "type": "number",
+      "description": "Vibration level in mm/s"
+    },
+    "power_consumption": {
+      "type": "number",
+      "description": "Power consumption in kW"
+    },
+    "cycle_time": {
+      "type": "number",
+      "description": "Current cycle time in seconds"
+    },
+    "uptime_hours": {
+      "type": "number",
+      "description": "Total uptime hours"
+    },
+    "last_maintenance": {
+      "type": "string",
+      "format": "date",
+      "description": "Last maintenance date"
+    },
+    "next_maintenance": {
+      "type": "string",
+      "format": "date",
+      "description": "Next scheduled maintenance"
+    },
+    "firmware_version": {
+      "type": "string",
+      "description": "Current firmware version"
+    },
+    "azure_iot_device_id": {
+      "type": "string",
+      "description": "Azure IoT Hub device ID"
+    }
+  },
+  "required": [
+    "name",
+    "type"
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "name": "MLModel",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Model name"
+    },
+    "version": {
+      "type": "string",
+      "description": "Model version"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "anomaly_detection",
+        "predictive_maintenance",
+        "quality_inspection",
+        "defect_detection",
+        "yield_prediction",
+        "demand_forecasting",
+        "slm_fine_tuned"
+      ],
+      "description": "Model type"
+    },
+    "framework": {
+      "type": "string",
+      "enum": [
+        "pytorch",
+        "tensorflow",
+        "onnx",
+        "scikit_learn",
+        "azure_automl",
+        "phi_3",
+        "custom"
+      ],
+      "description": "ML framework used"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "training",
+        "validating",
+        "deployed",
+        "archived",
+        "failed"
+      ],
+      "default": "training",
+      "description": "Model lifecycle status"
+    },
+    "accuracy": {
+      "type": "number",
+      "description": "Model accuracy"
+    },
+    "precision_score": {
+      "type": "number",
+      "description": "Precision score"
+    },
+    "recall_score": {
+      "type": "number",
+      "description": "Recall score"
+    },
+    "f1_score": {
+      "type": "number",
+      "description": "F1 score"
+    },
+    "training_data_size": {
+      "type": "number",
+      "description": "Training dataset size"
+    },
+    "inference_time_ms": {
+      "type": "number",
+      "description": "Average inference time in milliseconds"
+    },
+    "azure_endpoint": {
+      "type": "string",
+      "description": "Azure ML endpoint URL"
+    },
+    "deployed_to": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Machines/cameras this model is deployed to"
+    },
+    "description": {
+      "type": "string",
+      "description": "Model description and notes"
+    }
+  },
+  "required": [
+    "name",
+    "type"
+  ]
+}

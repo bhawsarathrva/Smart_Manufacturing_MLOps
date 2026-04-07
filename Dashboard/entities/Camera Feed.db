@@ -1,0 +1,72 @@
+{
+  "name": "CameraFeed",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Camera name/identifier"
+    },
+    "location": {
+      "type": "string",
+      "description": "Camera location on the floor"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "defect_detection",
+        "safety_monitoring",
+        "quality_inspection",
+        "inventory_tracking",
+        "line_monitoring"
+      ],
+      "description": "Camera purpose"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "online",
+        "offline",
+        "processing",
+        "error"
+      ],
+      "default": "online",
+      "description": "Camera feed status"
+    },
+    "stream_url": {
+      "type": "string",
+      "description": "Stream URL or image URL"
+    },
+    "model_deployed": {
+      "type": "string",
+      "description": "AI model deployed on this camera"
+    },
+    "detections_today": {
+      "type": "number",
+      "description": "Total detections made today"
+    },
+    "defects_today": {
+      "type": "number",
+      "description": "Defects detected today"
+    },
+    "accuracy": {
+      "type": "number",
+      "description": "Model accuracy percentage"
+    },
+    "fps": {
+      "type": "number",
+      "description": "Frames per second"
+    },
+    "last_detection_image": {
+      "type": "string",
+      "description": "URL to last detection image"
+    },
+    "azure_cognitive_endpoint": {
+      "type": "string",
+      "description": "Azure Custom Vision endpoint"
+    }
+  },
+  "required": [
+    "name",
+    "type"
+  ]
+}

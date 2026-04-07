@@ -1,0 +1,70 @@
+{
+  "name": "Alert",
+  "type": "object",
+  "properties": {
+    "machine_id": {
+      "type": "string",
+      "description": "Reference to Machine entity ID"
+    },
+    "machine_name": {
+      "type": "string",
+      "description": "Machine name for display"
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "info",
+        "warning",
+        "critical",
+        "emergency"
+      ],
+      "default": "info",
+      "description": "Alert severity level"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "anomaly",
+        "maintenance",
+        "quality",
+        "safety",
+        "performance",
+        "prediction"
+      ],
+      "description": "Alert type"
+    },
+    "title": {
+      "type": "string",
+      "description": "Alert title"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed alert description"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "acknowledged",
+        "resolved",
+        "dismissed"
+      ],
+      "default": "active",
+      "description": "Alert status"
+    },
+    "ai_recommendation": {
+      "type": "string",
+      "description": "AI-generated recommendation for this alert"
+    },
+    "resolved_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the alert was resolved"
+    }
+  },
+  "required": [
+    "title",
+    "severity",
+    "type"
+  ]
+}
