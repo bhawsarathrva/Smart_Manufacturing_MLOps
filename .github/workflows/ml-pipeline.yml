@@ -1,0 +1,138 @@
+name: ML Pipeline CI/CD
+
+on:
+  push:
+    branches: [ "master", "main" ]
+    paths:
+      - 'src/**'
+      - 'dvc.yaml'
+      - 'requirements.txt'
+      - '.github/workflows/ml-pipeline.yml'
+  pull_request:
+    branches: [ "master", "main" ]
+    paths:
+      - 'src/**'
+      - 'dvc.yaml'
+
+jobs:
+  train-and-evaluate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install dvc dvc-gs pytest flake8
+
+      - name: Run Linter (flake8)
+        run: |
+          flake8 src/ --count --select=E9,F63,F7,F82 --show-source --statistics
+
+      # To pull data, we authenticate using GCP Workload Identity
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud for DVC'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          workload_identity_provider: '${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}'
+          service_account: '${{ secrets.GCP_SERVICE_ACCOUNT }}'
+
+      - name: DVC Pull & Repro
+        run: |
+          # Pull the actual data from the DVC remote backend (GCS)
+          dvc pull
+          
+          # Run the pipeline (data processing & model training)
+          dvc repro
+
+      - name: Quality Gate - Model Metrics Validator
+        run: |
+          python -c "
+          import json
+          try:
+              with open('artifacts/models/metrics.json') as f:
+                  m = json.load(f)
+              # Robust threshold for Accuracy and F1-Score
+              accuracy = m.get('accuracy', 0)
+              f1 = m.get('f1_score', 0)
+              assert accuracy >= 0.85, f'Accuracy {accuracy:.2f} is below the 0.85 threshold.'
+              assert f1 >= 0.80, f'F1 Score {f1:.2f} is below the 0.80 threshold.'
+              print('✅ Quality Gate Passed:', m)
+          except Exception as e:
+              print('❌ Quality Gate Failed:', e)
+              exit(1)
+          "
+
+      - name: Report Metrics to PR
+        if: github.event_name == 'pull_request'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "## Model Evaluation Metrics 📊" > report.md
+          echo "Run on commit: ${{ github.sha }}" >> report.md
+          echo "\`\`\`json" >> report.md
+          cat artifacts/models/metrics.json >> report.md
+          echo "\`\`\`" >> report.md
+          # Ideally uses tricky GitHub API to comment on PR, or a CML action.
+          # Example with gh cli:
+          gh pr comment ${{ github.event.pull_request.number }} --body-file report.md
+
+  build-and-deploy-gke:
+    needs: train-and-evaluate
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Using Google Workload Identity Provider for security
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          workload_identity_provider: '${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}'
+          service_account: '${{ secrets.GCP_SERVICE_ACCOUNT }}'
+
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v1'
+
+      - name: 'Configure Docker for GCP Artifact Registry'
+        run: |
+          gcloud auth configure-docker us-central1-docker.pkg.dev
+
+      - name: Build & Push Docker image
+        run: |
+          PROJECT_ID="project-72fac804-0b85-45d9-bac" # Updated with User's GCP Project configuration
+          IMAGE="us-central1-docker.pkg.dev/${PROJECT_ID}/mlops-app/mlops-app"
+          TAG="${GITHUB_SHA}"
+          
+          docker build -t $IMAGE:$TAG .
+          docker tag $IMAGE:$TAG $IMAGE:latest
+          docker push $IMAGE:$TAG
+          docker push $IMAGE:latest
+
+      - name: Deploy to GKE
+        env:
+          PROJECT_ID: "project-72fac804-0b85-45d9-bac"
+          CLUSTER_NAME: "mlops-cluster"
+          CLUSTER_ZONE: "us-central1"
+        run: |
+          # Get credentials for cluster and deploy manifests
+          gcloud container clusters get-credentials $CLUSTER_NAME --zone $CLUSTER_ZONE --project $PROJECT_ID
+          
+          # Deploy deployment dynamically updating the tag
+          kubectl set image -f manifests/kubernates_deployment.yaml mlops-app=us-central1-docker.pkg.dev/${PROJECT_ID}/mlops-app/mlops-app:${GITHUB_SHA} --local -o yaml | kubectl apply -f -
+          
+          echo "🚀 Deployment triggered for revision ${GITHUB_SHA}"

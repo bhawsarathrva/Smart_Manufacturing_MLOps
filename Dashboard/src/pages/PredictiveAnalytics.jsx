@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
+import { base44 } from '@/api/Client';
 import { predictMaintenance } from '@/api/mlClient';
 import { Brain, TrendingUp, AlertTriangle, Target, Loader2, Gauge, Activity, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';

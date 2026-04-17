@@ -4,7 +4,7 @@ import Sidebar from './Sidebar';
 import TopBar from './TopBar';
 import { cn } from '@/lib/utils';
 import { useQuery } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
+import { base44 } from '@/api/Client';
 
 export default function AppLayout() {
   const [collapsed, setCollapsed] = useState(false);

@@ -1,4 +1,5 @@
 import os
+import json
 import joblib
 from sklearn.linear_model import LogisticRegression
 from src.logger import get_logger
@@ -57,7 +58,15 @@ class ModelTraining:
             logger.info(f"Recall Score : {recall}")
             logger.info(f"F1 Score : {f1}")
 
-            logger.info("Model Evaluation Done..")
+            metrics = {
+                "accuracy": accuracy,
+                "precision": precision,
+                "recall": recall,
+                "f1_score": f1
+            }
+            with open(os.path.join(self.model_path, "metrics.json"), "w") as f:
+                json.dump(metrics, f, indent=4)
+            logger.info("Model Evaluation Done. Metrics saved to metrics.json")
 
         except Exception as e:
             logger.error(f"Error while evaluating model {e}")

@@ -1,9 +1,9 @@
-from flask import Flask,render_template, request
+import os
+from flask import Flask, render_template, request, send_from_directory
 import joblib
 import numpy as np
 
-
-app = Flask(__name__)
+app = Flask(__name__, static_folder='Dashboard/dist', static_url_path='/', template_folder='Dashboard/dist')
 
 MODEL_PATH = "artifacts/models/model.pkl"
 SCALER_PATH = "artifacts/processed/scaler.pkl"
@@ -25,24 +25,14 @@ LABELS = {
 }
 
 
-@app.route("/" , methods=["GET" , "POST"])
-def index():
-    prediction = None
-
-    if request.method=="POST":
-        try:
-            input_data = [float(request.form[feature]) for feature in FEATURES]
-            input_array = np.array(input_data).reshape(1,-1)
-
-            scaled_array = scaler.transform(input_array)
-
-            pred = model.predict(scaled_array)[0]
-            prediction = LABELS.get(pred , "Unknown")
-
-        except Exception as e:
-            prediction = f"Error : {e}"
-
-    return render_template("index.html" , prediction=prediction , features = FEATURES)
+@app.route("/", defaults={'path': ''})
+@app.route("/<path:path>")
+def serve_dashboard(path):
+    # Match specific existing files in the static folder (like assets)
+    if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
+        return send_from_directory(app.static_folder, path)
+    # Catch-all serving React's index.html for frontend routing
+    return render_template("index.html")
 
 @app.route("/predict", methods=["POST"])
 def predict_api():

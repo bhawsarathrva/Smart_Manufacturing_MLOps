@@ -1,10 +1,10 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
+import { base44 } from '@/api/Client';
 import { Activity, Gauge, Package, AlertTriangle, Cpu, TrendingUp } from 'lucide-react';
 import KPICard from '../components/dashboard/KPICard';
 import MachineStatusGrid from '../components/dashboard/MachineStatusGrid';
-import AlertsFeed from '../components/dashboard/AlertsFeed';
+import AlertsFeed from '../components/dashboard/AlertFeed';
 import ProductionChart from '../components/dashboard/ProductionChart';
 import GCPArchDiagram from '../components/dashboard/GCPArchDiagram';
 

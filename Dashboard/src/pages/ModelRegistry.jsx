@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
+import { base44 } from '@/api/Client';
 import { Box, CheckCircle, Clock, AlertCircle, Archive, Loader2, Search, Filter } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/input';
