@@ -1,0 +1,15 @@
+{
+  "name": "smart-manufacturing-root",
+  "private": true,
+  "scripts": {
+    "start": "concurrently --kill-others-on-fail --names \"FLASK,DASHBOARD\" --prefix-colors \"yellow,cyan\" \"npm run flask\" \"npm run dashboard\"",
+    "flask": "cd CODE && .venv\\Scripts\\activate && python application.py",
+    "dashboard": "npm run dev --prefix Dashboard",
+    "dev": "npm run dev --prefix Dashboard",
+    "install-dashboard": "npm install --prefix Dashboard",
+    "predict": "python application.py"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

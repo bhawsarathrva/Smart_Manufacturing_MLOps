@@ -152,10 +152,10 @@ export default function ModelRegistry() {
                     <p className="text-xs text-muted-foreground">{selectedModel.description}</p>
                   </div>
                 )}
-                {selectedModel.azure_endpoint && (
+                {selectedModel.gcp_endpoint && (
                   <div className="pt-3 border-t border-border">
-                    <p className="text-[10px] text-muted-foreground">Azure Endpoint</p>
-                    <p className="text-xs font-mono text-primary break-all">{selectedModel.azure_endpoint}</p>
+                    <p className="text-[10px] text-muted-foreground">GCP Vertex AI Endpoint</p>
+                    <p className="text-xs font-mono text-primary break-all">{selectedModel.gcp_endpoint}</p>
                   </div>
                 )}
               </CardContent>

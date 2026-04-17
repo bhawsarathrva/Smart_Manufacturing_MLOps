@@ -30,7 +30,7 @@
         "tensorflow",
         "onnx",
         "scikit_learn",
-        "azure_automl",
+        "gcp_vertex_ai",
         "phi_3",
         "custom"
       ],
@@ -72,9 +72,9 @@
       "type": "number",
       "description": "Average inference time in milliseconds"
     },
-    "azure_endpoint": {
+    "gcp_endpoint": {
       "type": "string",
-      "description": "Azure ML endpoint URL"
+      "description": "GCP Vertex AI endpoint URL"
     },
     "deployed_to": {
       "type": "array",

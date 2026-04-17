@@ -2,9 +2,7 @@ import json
 import torch
 from transformers import AutoProcessor, AutoModelForVision2Seq
 from peft import LoraConfig, get_peft_model
-from azure.identity import DefaultAzureCredential
-from azure.ai.ml import MLClient
-from azure.ai.ml.entities import Job
+import google.cloud.aiplatform as aip
 
 class SLMFinetuner:
     """Fine-tunes a Small Vision-Language Model (SLM) for Manufacturing Detection."""
@@ -41,23 +39,21 @@ class SLMFinetuner:
         # This would handle the conversion of YOLO/JSON data to VLM-SFT formats
         pass
 
-    def run_azure_ml_job(self, workspace_params):
-        """Schedules the fine-tuning job on an Azure ML GPU instance."""
+    def run_gcp_ml_job(self, workspace_params):
+        """Schedules the fine-tuning job on a GCP Vertex AI GPU instance."""
         try:
-            ml_client = MLClient(
-                DefaultAzureCredential(), 
-                workspace_params['subscription_id'],
-                workspace_params['resource_group'],
-                workspace_params['workspace_name']
+            aip.init(
+                project=workspace_params.get('project_id'),
+                location=workspace_params.get('region', 'us-central1')
             )
-            # Define an Azure ML Job configuration here
-            print("Azure ML Client ready. Submit training job via AML SDK v2.")
+            # Define a GCP Vertex AI Job configuration here
+            print("GCP Vertex AI Client ready. Submit training job via Vertex AI SDK.")
         except Exception as e:
-            print(f"Failed to connect to Azure: {e}")
+            print(f"Failed to connect to GCP: {e}")
 
 if __name__ == "__main__":
     tuner = SLMFinetuner()
-    # Note: Training usually requires A100/H100/V100 on Azure
+    # Note: Training usually requires A100/H100/V100 on GCP
     # tuner.load_model_for_training()
     print("SLM Fine-tuning setup generated.")
-    print("Check docs/GENAI_AZURE_ARCHITECTURE.md for infra setup.")
+    print("Check docs/GENAI_GCP_ARCHITECTURE.md for infra setup.")

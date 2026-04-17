@@ -11,8 +11,8 @@ const pipelineStages = [
     color: 'primary',
     status: 'active',
     components: [
-      { name: 'Azure IoT Hub', status: 'running', throughput: '12.4K msgs/min' },
-      { name: 'Event Hubs', status: 'running', throughput: '8.2K events/min' },
+      { name: 'Cloud Pub/Sub', status: 'running', throughput: '12.4K msgs/min' },
+      { name: 'IoT Core', status: 'running', throughput: '8.2K events/min' },
       { name: 'Edge Gateway', status: 'running', throughput: '3.1K signals/sec' },
     ]
   },
@@ -22,7 +22,7 @@ const pipelineStages = [
     color: 'accent',
     status: 'active',
     components: [
-      { name: 'Azure Stream Analytics', status: 'running', throughput: '45ms latency' },
+      { name: 'Cloud Dataflow', status: 'running', throughput: '45ms latency' },
       { name: 'Real-time Anomaly Detection', status: 'running', throughput: '99.2% uptime' },
       { name: 'Data Enrichment', status: 'running', throughput: '10K records/min' },
     ]
@@ -33,9 +33,9 @@ const pipelineStages = [
     color: 'chart3',
     status: 'active',
     components: [
-      { name: 'Azure Data Lake Gen2', status: 'running', throughput: '2.4 TB stored' },
-      { name: 'Azure Synapse Analytics', status: 'running', throughput: 'Hot/Cold tiering' },
-      { name: 'Cosmos DB (Hot Path)', status: 'running', throughput: '<10ms reads' },
+      { name: 'Cloud Storage', status: 'running', throughput: '2.4 TB stored' },
+      { name: 'BigQuery', status: 'running', throughput: 'Multi-petabyte scaling' },
+      { name: 'Firestore (Hot Path)', status: 'running', throughput: '<10ms reads' },
     ]
   },
   {
@@ -44,7 +44,7 @@ const pipelineStages = [
     color: 'chart4',
     status: 'active',
     components: [
-      { name: 'Azure ML Workspace', status: 'running', throughput: '3 active experiments' },
+      { name: 'Vertex AI Workspace', status: 'running', throughput: '3 active experiments' },
       { name: 'Feature Store', status: 'running', throughput: '142 features' },
       { name: 'Model Training (Phi-3 SLM)', status: 'training', throughput: 'Epoch 12/50' },
     ]
@@ -55,7 +55,7 @@ const pipelineStages = [
     color: 'primary',
     status: 'active',
     components: [
-      { name: 'Azure ML Endpoints', status: 'running', throughput: '23ms avg inference' },
+      { name: 'Vertex AI Endpoints', status: 'running', throughput: '23ms avg inference' },
       { name: 'Dashboard API', status: 'running', throughput: '99.9% SLA' },
       { name: 'Alerts & Notifications', status: 'running', throughput: '47 rules active' },
     ]
@@ -80,7 +80,7 @@ export default function DataPipeline() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-foreground">Data Pipeline</h1>
-        <p className="text-sm text-muted-foreground mt-1">Azure-based data ingestion, processing, and ML pipeline architecture</p>
+        <p className="text-sm text-muted-foreground mt-1">GCP-based data ingestion, processing, and ML pipeline architecture</p>
       </div>
 
       {/* Pipeline Visualization */}
@@ -147,7 +147,7 @@ export default function DataPipeline() {
               { label: 'Base Model', value: 'Phi-3-mini-4k', desc: 'Microsoft SLM' },
               { label: 'Training Data', value: '148K samples', desc: 'Manufacturing domain' },
               { label: 'Fine-tuning', value: 'LoRA / QLoRA', desc: 'Parameter efficient' },
-              { label: 'Deploy Target', value: 'Azure ML + Edge', desc: 'Hybrid inference' },
+              { label: 'Deploy Target', value: 'Vertex AI + Edge', desc: 'Hybrid inference' },
             ].map((item) => (
               <div key={item.label} className="bg-chart-4/5 border border-chart-4/20 rounded-lg p-3">
                 <p className="text-xs text-muted-foreground">{item.label}</p>

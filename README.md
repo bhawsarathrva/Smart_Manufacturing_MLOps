@@ -1,10 +1,8 @@
 # Smart Manufacturing AI & MLOps Platform
-
 A production-grade, AI-driven manufacturing monitoring and predictive analytics platform. This project integrates a modern Data & ML pipeline with Microsoft Phi-3 GenAI reasoning for specialized manufacturing anomaly detection and a real-time React-based dashboard.
 
 ## 🚀 Overview
-
-This platform transforms traditional manufacturing monitoring into an intelligent, proactive system. It leverages Azure cloud infrastructure, IoT sensor data ingestion, and advanced machine learning models (including Small Language Models like Phi-3) to provide actionable insights for factory floor operations.
+This platform transforms traditional manufacturing monitoring into an intelligent, proactive system. It leverages GCP cloud infrastructure, IoT sensor data ingestion, and advanced machine learning models (including Small Language Models like Phi-3) to provide actionable insights for factory floor operations.
 
 ## ✨ Key Features
 
@@ -13,14 +11,14 @@ This platform transforms traditional manufacturing monitoring into an intelligen
 - **Real-time Monitoring**: Live dashboard for tracking machine OEE, temperature, vibration, and power consumption.
 - **MLOps Pipeline**: Fully versioned data and model pipeline using **DVC** (Data Version Control).
 - **GitOps Hub**: Automated CI/CD using **Jenkins**, **ArgoCD**, and **Kubernetes** for seamless deployment.
-- **Azure Architecture**: Designed for Azure IoT Hub, Event Hubs, and Synapse Analytics.
+- **GCP Architecture**: Designed for GCP Pub/Sub, Dataflow, and BigQuery.
 
 ## 🏗️ Project Structure
 
 ```text
 ├── Dashboard/              # React + Vite Frontend
 │   ├── src/
-│   │   ├── api/            # API Clients (Base44 & Flask ML)
+│   │   ├── api/            # API Clients (Flask ML)
 │   │   ├── components/     # UI & Dashboard Components
 │   │   └── pages/          # Analytics, Machine Monitor, AI Assistant
 ├── pipeline/               # Data processing & Training logic
@@ -40,8 +38,8 @@ This platform transforms traditional manufacturing monitoring into an intelligen
 
 - **Frontend**: React, Vite, Tailwind CSS, Lucide Icons, Recharts, TanStack Query.
 - **Backend/ML**: Python, Flask, Scikit-learn, Pandas, NumPy, Joblib.
-- **GenAI**: Microsoft Phi-3 SLM, Azure ML.
-- **Infrastructure/DevOps**: Azure, Docker, Kubernetes, Jenkins, ArgoCD, DVC.
+- **GenAI**: Microsoft Phi-3 SLM, Vertex AI.
+- **Infrastructure/DevOps**: GCP, Docker, Kubernetes, Jenkins, ArgoCD, DVC.
 
 ## ⚙️ Setup & Installation
 

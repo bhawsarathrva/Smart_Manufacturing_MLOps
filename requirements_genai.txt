@@ -1,10 +1,10 @@
-# Production-Grade GenAI & Azure ML Stack
-azure-ai-ml                     # Azure ML SDK v2
-azure-identity
-azure-iot-hub
-azure-cosmos
+# Production-Grade GenAI & GCP Vertex AI Stack
+google-cloud-aiplatform        # GCP Vertex AI SDK
+google-cloud-storage
+google-cloud-iot
+google-cloud-firestore
 langchain                      # LLM Orchestration
-langchain-azure-openai         # GenAI Reasoning
+langchain-google-vertexai      # GenAI Reasoning
 ultralytics                    # Real-time base detection
 transformers                   # SLM (Phi-3/Qwen) handling
 peft                           # LoRA/QLoRA for fine-tuning

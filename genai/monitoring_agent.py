@@ -1,7 +1,7 @@
 import os
 import json
 from datetime import datetime
-from langchain_azure_openai import AzureChatOpenAI
+from langchain_google_vertexai import ChatVertexAI
 from pydantic import BaseModel, Field
 
 class ManufacturingEvent(BaseModel):
@@ -16,14 +16,13 @@ class ManufacturingEvent(BaseModel):
 class RealTimeMonitor:
     """GenAI Agent for Reasoning on Real-time Manufacturing Data."""
 
-    def __init__(self, azure_params):
-        self.llm = AzureChatOpenAI(
-            azure_deployment=azure_params['deployment_name'],
-            api_version="2024-02-15-preview",
-            azure_endpoint=azure_params['endpoint'],
-            api_key=azure_params['api_key']
+    def __init__(self, gcp_params):
+        self.llm = ChatVertexAI(
+            model_name=gcp_params.get('model_name', 'gemini-1.5-pro'),
+            project=gcp_params.get('project_id'),
+            location=gcp_params.get('location', 'us-central1')
         )
-        print("GenAI Monitoring Agent Initialized.")
+        print("GenAI Monitoring Agent Initialized (GCP Vertex AI).")
 
     def analyze_event(self, event: ManufacturingEvent):
         """Perform contextual reasoning on raw telemetry."""
@@ -48,7 +47,7 @@ if __name__ == "__main__":
         detection_conf=0.92,
         status="Anomaly"
     )
-    # monitor = RealTimeMonitor(azure_params)
+    # monitor = RealTimeMonitor(gcp_params)
     # reasoning = monitor.analyze_event(test_event)
     print(f"Agent Ready. Ingesting event: {test_event.zone_id}")
-    print("Reasoning logic loaded. Connecting to Azure IoT Hub...")
+    print("Reasoning logic loaded. Connecting to GCP IoT Core / Vertex AI...")

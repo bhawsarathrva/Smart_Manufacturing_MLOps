@@ -60,9 +60,9 @@
       "type": "string",
       "description": "URL to last detection image"
     },
-    "azure_cognitive_endpoint": {
+    "gcp_vertex_endpoint": {
       "type": "string",
-      "description": "Azure Custom Vision endpoint"
+      "description": "GCP Vertex AI endpoint"
     }
   },
   "required": [

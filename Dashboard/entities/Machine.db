@@ -74,9 +74,9 @@
       "type": "string",
       "description": "Current firmware version"
     },
-    "azure_iot_device_id": {
+    "gcp_iot_device_id": {
       "type": "string",
-      "description": "Azure IoT Hub device ID"
+      "description": "GCP IoT Core device ID"
     }
   },
   "required": [

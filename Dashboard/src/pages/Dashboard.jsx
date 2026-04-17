@@ -6,7 +6,7 @@ import KPICard from '../components/dashboard/KPICard';
 import MachineStatusGrid from '../components/dashboard/MachineStatusGrid';
 import AlertsFeed from '../components/dashboard/AlertsFeed';
 import ProductionChart from '../components/dashboard/ProductionChart';
-import AzureArchDiagram from '../components/dashboard/AzureArchDiagram';
+import GCPArchDiagram from '../components/dashboard/GCPArchDiagram';
 
 export default function Dashboard() {
   const { data: machines = [] } = useQuery({
@@ -61,7 +61,7 @@ export default function Dashboard() {
       {/* Machine Grid + Architecture */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <MachineStatusGrid machines={machines} />
-        <AzureArchDiagram />
+        <GCPArchDiagram />
       </div>
     </div>
   );
