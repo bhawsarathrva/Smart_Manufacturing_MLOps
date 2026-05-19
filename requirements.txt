@@ -1,22 +1,16 @@
-pandas
+openai
+langchain-openai
+faiss-cpu
 numpy
-scikit-learn
-flask
-joblib
-matplotlib
-seaborn
-google-cloud-aiplatform
-google-cloud-storage
-google-cloud-iot
-google-cloud-firestore
-langchain                    
-langchain-google-vertexai      # GenAI Reasoning
-ultralytics                    # Real-time base detection
-transformers                   # SLM (Phi-3/Qwen) handling
-peft                           # LoRA/QLoRA for fine-tuning
-bitsandbytes                   # 4-bit quant
-accelerate                     # multi-gpu training
-pydantic                       # Structured event validation
-opencv-python
-imutils
+langchain
+langchain-community
+fastapi
+uvicorn
+pydantic
+python-multipart
+streamlit
+requests
+pymupdf
 python-dotenv
+aiofiles
+mlflow

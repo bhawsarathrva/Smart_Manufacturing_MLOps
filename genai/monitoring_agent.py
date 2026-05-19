@@ -1,7 +1,10 @@
 import os
 import json
 from datetime import datetime
-from langchain_google_vertexai import ChatVertexAI
+from langchain_openai import ChatOpenAI
+from dotenv import load_dotenv
+
+load_dotenv()
 from pydantic import BaseModel, Field
 
 class ManufacturingEvent(BaseModel):
@@ -17,12 +20,15 @@ class RealTimeMonitor:
     """GenAI Agent for Reasoning on Real-time Manufacturing Data."""
 
     def __init__(self, gcp_params):
-        self.llm = ChatVertexAI(
-            model_name=gcp_params.get('model_name', 'gemini-1.5-pro'),
-            project=gcp_params.get('project_id'),
-            location=gcp_params.get('location', 'us-central1')
+        api_key = os.getenv("OPENAI_API_KEY")
+        if not api_key:
+            raise ValueError("OPENAI_API_KEY not found in environment variables. Please check your .env file.")
+        
+        self.llm = ChatOpenAI(
+            model_name=gcp_params.get('model_name', 'gpt-4o-mini'),
+            api_key=api_key
         )
-        print("GenAI Monitoring Agent Initialized (GCP Vertex AI).")
+        print("GenAI Monitoring Agent Initialized (OpenAI).")
 
     def analyze_event(self, event: ManufacturingEvent):
         """Perform contextual reasoning on raw telemetry."""
@@ -50,4 +56,4 @@ if __name__ == "__main__":
     # monitor = RealTimeMonitor(gcp_params)
     # reasoning = monitor.analyze_event(test_event)
     print(f"Agent Ready. Ingesting event: {test_event.zone_id}")
-    print("Reasoning logic loaded. Connecting to GCP IoT Core / Vertex AI...")
+    print("Reasoning logic loaded. Connecting to IoT Core / OpenAI...")

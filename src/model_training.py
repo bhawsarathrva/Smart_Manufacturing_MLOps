@@ -49,9 +49,9 @@ class ModelTraining:
             y_pred = self.clf.predict(self.X_test)
 
             accuracy = accuracy_score(self.y_test,y_pred)
-            precision =  precision_score(self.y_test,y_pred , average="weighted")
-            recall =  recall_score(self.y_test,y_pred , average="weighted")
-            f1 =  f1_score(self.y_test,y_pred , average="weighted")
+            precision =  precision_score(self.y_test,y_pred , average="weighted", zero_division=0)
+            recall =  recall_score(self.y_test,y_pred , average="weighted", zero_division=0)
+            f1 =  f1_score(self.y_test,y_pred , average="weighted", zero_division=0)
 
             logger.info(f"Accuracy : {accuracy}")
             logger.info(f"Precision Score : {precision}")

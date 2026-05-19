@@ -18,7 +18,7 @@ Write-Host "[1/2] Starting Flask backend on http://localhost:5000 ..." -Foregrou
 Start-Process powershell -ArgumentList @(
     "-NoExit",
     "-Command",
-    "cd '$ROOT'; Write-Host 'Activating venv...' -ForegroundColor Green; .\.venv\Scripts\Activate.ps1; Write-Host 'Starting Flask...' -ForegroundColor Green; python application.py"
+    "cd '$ROOT'; Write-Host 'Running with uv...' -ForegroundColor Green; uv run python application.py"
 ) -WindowStyle Normal
 
 Start-Sleep -Seconds 2   # give Flask a moment to start

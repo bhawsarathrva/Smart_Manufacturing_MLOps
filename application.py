@@ -47,6 +47,21 @@ def predict_api():
     except Exception as e:
         return {"error": str(e), "status": "error"}, 400
 
+@app.route("/api/metrics", methods=["GET"])
+def get_metrics():
+    # In a real app, this would query your ProductionBatch.db
+    # For now, we simulate live drift to show the dashboard is "alive"
+    import random
+    return {
+        "avg_oee": random.randint(82, 94),
+        "active_machines": random.randint(8, 12),
+        "total_machines": 12,
+        "units_produced": random.randint(15200, 15800),
+        "critical_alerts": random.randint(0, 3),
+        "yield_rate": round(random.uniform(94.5, 98.2), 1),
+        "uptime": 99.4,
+        "status": "success"
+    }
 
 if __name__=="__main__":
     app.run(debug=True , host="0.0.0.0" , port=5000)

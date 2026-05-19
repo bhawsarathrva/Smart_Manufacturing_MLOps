@@ -1,6 +1,6 @@
 stages:
   data_processing:
-    cmd: python -m src.data_processing
+    cmd: uv run python -m src.data_processing
     deps:
       - src/data_processing.py
       - DATA/data.csv
@@ -10,7 +10,7 @@ stages:
       - artifacts/processed
   
   model_training:
-    cmd: python -m src.model_training
+    cmd: uv run python -m src.model_training
     deps:
       - src/model_training.py
       - artifacts/processed

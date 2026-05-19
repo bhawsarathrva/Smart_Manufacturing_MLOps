@@ -1,0 +1,42 @@
+[project]
+name = "smart-manufacturing"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "accelerate",
+    "aiofiles",
+    "bitsandbytes",
+    "faiss-cpu",
+    "fastapi",
+    "flask",
+    "google-cloud-aiplatform",
+    "google-cloud-firestore",
+    "google-cloud-iot",
+    "google-cloud-storage",
+    "imutils",
+    "joblib",
+    "langchain",
+    "langchain-community",
+    "langchain-google-vertexai",
+    "langchain-openai",
+    "matplotlib",
+    "mlflow",
+    "numpy",
+    "openai",
+    "opencv-python",
+    "pandas",
+    "peft",
+    "pydantic",
+    "pymupdf",
+    "python-dotenv",
+    "python-multipart",
+    "requests",
+    "scikit-learn",
+    "seaborn",
+    "streamlit",
+    "transformers",
+    "ultralytics",
+    "uvicorn[standard]",
+]

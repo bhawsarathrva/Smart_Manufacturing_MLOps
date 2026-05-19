@@ -27,10 +27,19 @@ export default function Dashboard() {
     initialData: [],
   });
 
+  const { data: metrics = {} } = useQuery({
+    queryKey: ['live-metrics'],
+    queryFn: () => fetch('/api/metrics').then(res => res.json()),
+    refetchInterval: 5000, // Refresh every 5 seconds for live feel
+  });
+
   const runningMachines = machines.filter(m => m.status === 'running').length;
-  const avgOEE = machines.length ? Math.round(machines.reduce((sum, m) => sum + (m.oee_score || 0), 0) / machines.length) : 0;
-  const totalProduced = batches.reduce((sum, b) => sum + (b.produced_quantity || 0), 0);
-  const criticalAlerts = alerts.filter(a => a.severity === 'critical' || a.severity === 'emergency').length;
+  const avgOEE = metrics.avg_oee || (machines.length ? Math.round(machines.reduce((sum, m) => sum + (m.oee_score || 0), 0) / machines.length) : 0);
+  const totalProduced = metrics.units_produced || batches.reduce((sum, b) => sum + (b.produced_quantity || 0), 0);
+  const criticalAlerts = metrics.critical_alerts ?? alerts.filter(a => a.severity === 'critical' || a.severity === 'emergency').length;
+  const yieldRate = metrics.yield_rate || "96.8";
+  const uptime = metrics.uptime || "99.2";
+  const activeMachinesText = metrics.active_machines ? `${metrics.active_machines}/${metrics.total_machines}` : `${runningMachines}/${machines.length}`;
 
   return (
     <div className="space-y-6">
@@ -43,11 +52,11 @@ export default function Dashboard() {
       {/* KPI Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 gap-4">
         <KPICard title="Avg OEE" value={avgOEE} unit="%" trend="up" trendValue="+2.3%" icon={Gauge} color="primary" />
-        <KPICard title="Active Machines" value={`${runningMachines}/${machines.length}`} unit="" icon={Cpu} color="accent" />
+        <KPICard title="Active Machines" value={activeMachinesText} unit="" icon={Cpu} color="accent" />
         <KPICard title="Units Produced" value={totalProduced.toLocaleString()} unit="" trend="up" trendValue="+12%" icon={Package} color="chart3" />
         <KPICard title="Critical Alerts" value={criticalAlerts} unit="" trend={criticalAlerts > 0 ? 'down' : 'up'} trendValue={criticalAlerts > 0 ? 'Action needed' : 'All clear'} icon={AlertTriangle} color="destructive" />
-        <KPICard title="Yield Rate" value="96.8" unit="%" trend="up" trendValue="+0.5%" icon={TrendingUp} color="chart4" />
-        <KPICard title="Uptime" value="99.2" unit="%" trend="up" trendValue="+0.1%" icon={Activity} color="primary" />
+        <KPICard title="Yield Rate" value={yieldRate} unit="%" trend="up" trendValue="+0.5%" icon={TrendingUp} color="chart4" />
+        <KPICard title="Uptime" value={uptime} unit="%" trend="up" trendValue="+0.1%" icon={Activity} color="primary" />
       </div>
 
       {/* Charts + Alerts */}

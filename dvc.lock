@@ -1,0 +1,53 @@
+schema: '2.0'
+stages:
+  data_processing:
+    cmd: uv run python -m src.data_processing
+    deps:
+    - path: DATA/data.csv
+      hash: md5
+      md5: 01465d4127cb4f92253735170d0ad438
+      size: 20173052
+    - path: src/custom_exception.py
+      hash: md5
+      md5: c3a259873ec09a4ddb38ff95e63c43b2
+      size: 745
+    - path: src/data_processing.py
+      hash: md5
+      md5: 41bf16a36140196df1137030d94189d7
+      size: 5848
+    - path: src/logger.py
+      hash: md5
+      md5: 545bd871e933caad0f54e37de63ff75c
+      size: 450
+    outs:
+    - path: artifacts/processed
+      hash: md5
+      md5: 974f2d19f6a967bd3c3fae0f168f1f3b.dir
+      size: 37003164
+      nfiles: 5
+  model_training:
+    cmd: uv run python -m src.model_training
+    deps:
+    - path: artifacts/processed
+      hash: md5
+      md5: 974f2d19f6a967bd3c3fae0f168f1f3b.dir
+      size: 37003164
+      nfiles: 5
+    - path: src/custom_exception.py
+      hash: md5
+      md5: c3a259873ec09a4ddb38ff95e63c43b2
+      size: 745
+    - path: src/logger.py
+      hash: md5
+      md5: 545bd871e933caad0f54e37de63ff75c
+      size: 450
+    - path: src/model_training.py
+      hash: md5
+      md5: 643b9baa443d878bb707795ff3953ddf
+      size: 3281
+    outs:
+    - path: artifacts/models
+      hash: md5
+      md5: 95eedcceda3e9cf0d2d901c85735b410.dir
+      size: 1174
+      nfiles: 3
