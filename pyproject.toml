@@ -16,6 +16,7 @@ dependencies = [
     "google-cloud-iot",
     "google-cloud-storage",
     "imutils",
+    "ipykernel>=7.2.0",
     "joblib",
     "langchain",
     "langchain-community",

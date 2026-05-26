@@ -1,9 +1,19 @@
 stages:
+  data_ingestion:
+    cmd: uv run python -m src.data_ingestion
+    deps:
+      - src/data_ingestion.py
+      - DATA/factory_sensor_simulator_2040.csv
+      - src/logger.py
+      - src/custom_exception.py
+    outs:
+      - artifacts/raw/data.csv
+
   data_processing:
     cmd: uv run python -m src.data_processing
     deps:
       - src/data_processing.py
-      - DATA/data.csv
+      - artifacts/raw/data.csv
       - src/logger.py
       - src/custom_exception.py
     outs:

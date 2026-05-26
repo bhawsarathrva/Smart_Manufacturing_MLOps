@@ -130,5 +130,5 @@ class DataProcessing:
         self.split_and_scale_and_save()
 
 if __name__=="__main__":
-    processor = DataProcessing("DATA/factory_sensor_simulator_2040.csv" , "artifacts/processed")
+    processor = DataProcessing("artifacts/raw/data.csv" , "artifacts/processed")
     processor.run()

@@ -3,18 +3,18 @@ stages:
   data_processing:
     cmd: uv run python -m src.data_processing
     deps:
-    - path: DATA/data.csv
+    - path: artifacts/raw/data.csv
       hash: md5
-      md5: 01465d4127cb4f92253735170d0ad438
-      size: 20173052
+      md5: fcc4cfbe82856aac4cd0e046d19f4c62
+      size: 51996118
     - path: src/custom_exception.py
       hash: md5
       md5: c3a259873ec09a4ddb38ff95e63c43b2
       size: 745
     - path: src/data_processing.py
       hash: md5
-      md5: 41bf16a36140196df1137030d94189d7
-      size: 5848
+      md5: 3d964f96a495c41b1931523354c39414
+      size: 5700
     - path: src/logger.py
       hash: md5
       md5: 545bd871e933caad0f54e37de63ff75c
@@ -22,16 +22,16 @@ stages:
     outs:
     - path: artifacts/processed
       hash: md5
-      md5: 974f2d19f6a967bd3c3fae0f168f1f3b.dir
-      size: 37003164
+      md5: bfae049465de55872907f82c3dcc172d.dir
+      size: 37003196
       nfiles: 5
   model_training:
     cmd: uv run python -m src.model_training
     deps:
     - path: artifacts/processed
       hash: md5
-      md5: 974f2d19f6a967bd3c3fae0f168f1f3b.dir
-      size: 37003164
+      md5: bfae049465de55872907f82c3dcc172d.dir
+      size: 37003196
       nfiles: 5
     - path: src/custom_exception.py
       hash: md5
@@ -48,6 +48,30 @@ stages:
     outs:
     - path: artifacts/models
       hash: md5
-      md5: 95eedcceda3e9cf0d2d901c85735b410.dir
-      size: 1174
-      nfiles: 3
+      md5: df54c922786f2f5592e9539f1bc4d236.dir
+      size: 1039
+      nfiles: 2
+  data_ingestion:
+    cmd: uv run python -m src.data_ingestion
+    deps:
+    - path: DATA/factory_sensor_simulator_2040.csv
+      hash: md5
+      md5: 8b13b6b0aaef136f5643ecccb18a22f2
+      size: 51496117
+    - path: src/custom_exception.py
+      hash: md5
+      md5: c3a259873ec09a4ddb38ff95e63c43b2
+      size: 745
+    - path: src/data_ingestion.py
+      hash: md5
+      md5: 1a30cf476b511ead86bffc5f9830c72d
+      size: 1816
+    - path: src/logger.py
+      hash: md5
+      md5: 545bd871e933caad0f54e37de63ff75c
+      size: 450
+    outs:
+    - path: artifacts/raw/data.csv
+      hash: md5
+      md5: fcc4cfbe82856aac4cd0e046d19f4c62
+      size: 51996118

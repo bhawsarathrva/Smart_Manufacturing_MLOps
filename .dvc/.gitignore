@@ -1,3 +1,13 @@
 /config.local
 /tmp
 /cache
+
+.venv/
+SMART_MANUFACTURING.egg-info/
+.env
+.env.example
+__pycache__/
+*.pyc
+artifacts/
+logs/
+*.log
